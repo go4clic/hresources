@@ -76,7 +76,7 @@ const Index: React.FC = () => {
             <div className="text-white/50 text-sm text-center md:text-right">
               <p>© {new Date().getFullYear()} IA en RRHH. Todos los derechos reservados.</p>
               <div className="mt-2 space-x-4">
-                <a href="#" className="text-white/70 hover:text-brand-cyan transition-colors">Política de Privacidad</a>
+                <a href="https://www.go4clic.com/politica-de-privacidad" target="_blank" rel="noopener noreferrer" className="text-white/70 hover:text-brand-cyan transition-colors">Política de Privacidad</a>
                 <a href="#" className="text-white/70 hover:text-brand-cyan transition-colors">Términos de Uso</a>
                 <a href="#" className="text-white/70 hover:text-brand-cyan transition-colors">Contacto</a>
               </div>

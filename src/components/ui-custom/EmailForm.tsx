@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Check, ArrowRight } from 'lucide-react';
 import { toast } from 'sonner';
+import { supabase } from "@/integrations/supabase/client";
 
 interface EmailFormProps {
   buttonText?: string;
@@ -38,8 +39,14 @@ const EmailForm: React.FC<EmailFormProps> = ({
     setIsSubmitting(true);
     
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Save email to Supabase and send the guide
+      const { error: apiError } = await supabase.functions.invoke('send-guide-email', {
+        body: { email }
+      });
+      
+      if (apiError) {
+        throw new Error(apiError.message || 'Error al enviar la guía');
+      }
       
       if (onSubmit) {
         onSubmit(email);
@@ -49,6 +56,7 @@ const EmailForm: React.FC<EmailFormProps> = ({
       setEmail('');
       setAgreedToPrivacy(false);
     } catch (error) {
+      console.error('Error:', error);
       toast.error('Ocurrió un error. Por favor, inténtalo de nuevo');
     } finally {
       setIsSubmitting(false);
@@ -98,7 +106,7 @@ const EmailForm: React.FC<EmailFormProps> = ({
             className="text-sm text-white/70 cursor-pointer"
             onClick={() => setAgreedToPrivacy(!agreedToPrivacy)}
           >
-            Acepto la <a href="#" className="text-brand-cyan underline hover:text-brand-pink transition-colors">Política de Privacidad</a>
+            Acepto la <a href="https://www.go4clic.com/politica-de-privacidad" target="_blank" rel="noopener noreferrer" className="text-brand-cyan underline hover:text-brand-pink transition-colors">Política de Privacidad</a>
           </label>
         </div>
       )}
