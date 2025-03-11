@@ -66,17 +66,19 @@ const Index: React.FC = () => {
         <div className="container mx-auto px-6 max-w-7xl">
           <div className="flex flex-col md:flex-row items-center justify-between">
             <div className="mb-6 md:mb-0">
-              <a href="#" className="text-white font-bold text-2xl flex items-center">
-                <span className="text-brand-cyan">IA</span>
-                <span className="mx-1">en</span>
-                <span className="text-brand-pink">RRHH</span>
+              <a href="#" className="text-white flex items-center">
+                <img 
+                  src="https://cdn.prod.website-files.com/65f962dc30fecb695292b486/660fe4e76a5da038752d173b_logo_go4clic_black.svg" 
+                  alt="Go4Clic Logo" 
+                  className="h-10 bg-white rounded-md px-2 py-1"
+                />
               </a>
             </div>
             
             <div className="text-white/50 text-sm text-center md:text-right">
-              <p>© {new Date().getFullYear()} IA en RRHH. Todos los derechos reservados.</p>
+              <p>© {new Date().getFullYear()} Go4Clic. Todos los derechos reservados.</p>
               <div className="mt-2 space-x-4">
-                <a href="#" className="text-white/70 hover:text-brand-cyan transition-colors">Política de Privacidad</a>
+                <a href="https://www.go4clic.com/politica-de-privacidad" target="_blank" rel="noopener noreferrer" className="text-white/70 hover:text-brand-cyan transition-colors">Política de Privacidad</a>
                 <a href="#" className="text-white/70 hover:text-brand-cyan transition-colors">Términos de Uso</a>
                 <a href="#" className="text-white/70 hover:text-brand-cyan transition-colors">Contacto</a>
               </div>

@@ -98,7 +98,7 @@ const EmailForm: React.FC<EmailFormProps> = ({
             className="text-sm text-white/70 cursor-pointer"
             onClick={() => setAgreedToPrivacy(!agreedToPrivacy)}
           >
-            Acepto la <a href="#" className="text-brand-cyan underline hover:text-brand-pink transition-colors">Política de Privacidad</a>
+            Acepto la <a href="https://www.go4clic.com/politica-de-privacidad" target="_blank" rel="noopener noreferrer" className="text-brand-cyan underline hover:text-brand-pink transition-colors">Política de Privacidad</a>
           </label>
         </div>
       )}
