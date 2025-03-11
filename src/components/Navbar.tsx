@@ -20,14 +20,12 @@ const Navbar: React.FC = () => {
         <div className="flex items-center justify-between">
           <a 
             href="#" 
-            className="text-white flex items-center"
+            className="text-white font-bold text-2xl flex items-center"
             aria-label="Logo"
           >
-            <img 
-              src="https://cdn.prod.website-files.com/65f962dc30fecb695292b486/660fe4e76a5da038752d173b_logo_go4clic_black.svg" 
-              alt="Go4Clic Logo" 
-              className="h-10 bg-white rounded-md px-2 py-1"
-            />
+            <span className="text-brand-cyan">IA</span>
+            <span className="mx-1">en</span>
+            <span className="text-brand-pink">RRHH</span>
           </a>
           
           {/* Desktop Navigation */}
