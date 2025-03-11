@@ -12,7 +12,9 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-const guideUrl = "https://drive.google.com/file/d/1U-SdRYH7XoGZf5PhSLXz02GkD6jYlI1i/view?usp=sharing";
+// Guide information
+const guidePdfUrl = "https://drive.google.com/file/d/1U-SdRYH7XoGZf5PhSLXz02GkD6jYlI1i/view?usp=sharing";
+const guideGoogleDriveId = "1U-SdRYH7XoGZf5PhSLXz02GkD6jYlI1i"; // Extracted from the URL
 
 serve(async (req) => {
   // Handle CORS preflight requests
@@ -44,37 +46,57 @@ serve(async (req) => {
       // Continue even if there's an error saving to DB
     }
 
-    // Send the email
+    // Create a better HTML template for the email
+    const htmlTemplate = `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; color: #333;">
+        <h1 style="color: #0EA5E9; margin-bottom: 20px;">¡Gracias por tu interés en IA en RRHH!</h1>
+        
+        <p>Hola,</p>
+        
+        <p>Estamos emocionados de compartir contigo nuestra guía completa sobre el uso de la Inteligencia Artificial en Recursos Humanos. En esta guía encontrarás:</p>
+        
+        <ul style="margin-bottom: 20px;">
+          <li>Casos de uso prácticos de IA en RRHH</li>
+          <li>Estrategias para implementar IA en tu departamento</li>
+          <li>Herramientas y recursos recomendados</li>
+          <li>Consejos para superar obstáculos comunes</li>
+        </ul>
+        
+        <p>Puedes acceder a la guía completa en el siguiente enlace:</p>
+        
+        <div style="text-align: center; margin: 30px 0;">
+          <a href="${guidePdfUrl}" style="background-color: #0EA5E9; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px; font-weight: bold;">DESCARGAR GUÍA COMPLETA</a>
+        </div>
+        
+        <p>Si prefieres, también puedes ver la guía directamente haciendo clic <a href="https://drive.google.com/file/d/${guideGoogleDriveId}/preview" style="color: #0EA5E9;">aquí</a>.</p>
+        
+        <p>¿Tienes preguntas o necesitas más información? No dudes en responder a este correo electrónico, estaremos encantados de ayudarte.</p>
+        
+        <p>¡Esperamos que esta guía te sea útil en tu camino hacia la transformación digital de RRHH!</p>
+        
+        <p>Saludos,<br>El equipo de IA en RRHH</p>
+        
+        <hr style="border: 1px solid #eee; margin: 30px 0;" />
+        
+        <p style="font-size: 12px; color: #666;">
+          © ${new Date().getFullYear()} IA en RRHH. Todos los derechos reservados.<br>
+          <a href="https://www.go4clic.com/politica-de-privacidad" style="color: #0EA5E9; text-decoration: none;">Política de Privacidad</a>
+        </p>
+      </div>
+    `;
+
+    // Send the email with attachment
     const emailResponse = await resend.emails.send({
       from: "IA en RRHH <onboarding@resend.dev>",
       to: [email],
       subject: "Tu Guía Gratuita: IA en Recursos Humanos",
-      html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; color: #333;">
-          <h1 style="color: #0EA5E9; margin-bottom: 20px;">¡Gracias por tu interés en IA en RRHH!</h1>
-          
-          <p>Hola,</p>
-          
-          <p>Gracias por descargar nuestra guía gratuita sobre el uso de la Inteligencia Artificial en Recursos Humanos. Aquí encontrarás herramientas, estrategias y consejos prácticos para transformar tu departamento de RRHH.</p>
-          
-          <p>Puedes acceder a la guía completa en el siguiente enlace:</p>
-          
-          <div style="text-align: center; margin: 30px 0;">
-            <a href="${guideUrl}" style="background-color: #0EA5E9; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px; font-weight: bold;">DESCARGAR GUÍA COMPLETA</a>
-          </div>
-          
-          <p>Si tienes alguna pregunta o necesitas más información, no dudes en contactarnos.</p>
-          
-          <p>Saludos,<br>El equipo de IA en RRHH</p>
-          
-          <hr style="border: 1px solid #eee; margin: 30px 0;" />
-          
-          <p style="font-size: 12px; color: #666;">
-            © ${new Date().getFullYear()} IA en RRHH. Todos los derechos reservados.<br>
-            <a href="https://www.go4clic.com/politica-de-privacidad" style="color: #0EA5E9; text-decoration: none;">Política de Privacidad</a>
-          </p>
-        </div>
-      `,
+      html: htmlTemplate,
+      attachments: [
+        {
+          filename: "Guia_IA_en_RRHH.pdf",
+          path: `https://drive.google.com/uc?export=download&id=${guideGoogleDriveId}`,
+        },
+      ],
     });
 
     console.log("Email enviado:", emailResponse);
